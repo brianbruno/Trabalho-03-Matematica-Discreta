@@ -10,7 +10,7 @@
 
     <div class="col-3">
       <button type="button" class="btn btn-secondary center-block" (click)="novoConjunto()">
-        Adicionar Conjunto <span><i class="material-icons">add</i></span>
+        <span>Adicionar Conjunto + </span>
       </button>
       <ul class="list-group">
         <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" *ngFor="let conjunto of conjuntos"
@@ -19,16 +19,56 @@
     </div>
 
     <div class="col-9">
-      <div class="card">
-        <div class="card-body" *ngIf="selecionado != null">
-          <h3>Conjunto {{ selecionado.nome }}</h3>
-          <h5>Elementos:</h5>
-          <form class="form-inline">
-            <div class="form-group">
-              <input [(ngModel)]="elemento"  type="text" class="form-control" id="inputElemento" aria-describedby="emailHelp" placeholder="Insira o elemento">
-              <button type="submit" class="btn btn-primary" (click)="selecionado.addElemento(elemento)">+</button>
+      <div class="card ">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="conjunto-tab" data-toggle="tab" href="#cardConjunto" role="tab" aria-controls="home" aria-selected="true">Conjuntos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="operacoes-tab" data-toggle="tab" href="#cardOperacoes" role="tab" aria-controls="profile" aria-selected="false">Operações</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="produtos-tab" data-toggle="tab" href="#cardProdutoCartesiano" role="tab" aria-controls="profile" aria-selected="false">Produto Cartesiano</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="myTabContent">
+            <div id="cardConjunto" role="tabpanel" aria-labelledby="conjunto-tab" class="tab-pane fade show active" *ngIf="selecionado != null; else addConjunto">
+              <h3>Conjunto {{ selecionado.nome }}</h3>
+              <h5>Elementos:</h5>
+              <h6>{{ selecionado.elementosConcat }}</h6>
+              <div class="input-group mb-3">
+                <input #elemento type="text" class="form-control" id="inputElemento"
+                       (keyup.enter)="addElemento(elemento.value); elemento.value = null;" placeholder="Insira o elemento">
+                <div class="input-group-append">
+                  <button class="btn btn-secondary" (click)="addElemento(elemento.value)">+</button>
+                </div>
+              </div>
+              <small id="addElementoHelper" class="form-text text-muted">Digite #Nome do conjunto para adicionar um conjunto existente! (Ex.: #B)</small>
+              <ng-template #addConjunto>
+                <h3>Adicione um conjunto.</h3>
+              </ng-template>
             </div>
-          </form>
+
+            <div id="cardOperacoes" role="tabpanel" aria-labelledby="operacoes-tab" class="tab-pane fade">
+              <div class="text-center">
+                <div class="btn-group text-center" role="group" aria-label="Operações">
+                  <button type="button" class="btn btn-info" (click)="setOperacao('-U')">∩</button>
+                  <button type="button" class="btn btn-info" (click)="setOperacao('U')">U</button>
+                  <button type="button" class="btn btn-info" (click)="setOperacao('-')">-</button>
+                  <button type="button" class="btn btn-info" (click)="setOperacao('P')">P(...)</button>
+                  <button type="button" class="btn btn-info" (click)="setOperacao('’')">’</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="cardProdutoCartesiano" role="tabpanel" aria-labelledby="produtos-tab" class="tab-pane fade">
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
