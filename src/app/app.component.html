@@ -8,7 +8,7 @@
   </div>
   <div class="row">
 
-    <div class="col-3">
+    <div class="col-2">
       <button type="button" class="btn btn-secondary center-block" (click)="novoConjunto()">
         <span>Adicionar Conjunto + </span>
       </button>
@@ -18,7 +18,7 @@
       </ul>
     </div>
 
-    <div class="col-9">
+    <div class="col-10">
       <div class="card ">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">
@@ -60,6 +60,35 @@
                   <button type="button" class="btn btn-info" (click)="setOperacao('-')">-</button>
                   <button type="button" class="btn btn-info" (click)="setOperacao('P')">P(...)</button>
                   <button type="button" class="btn btn-info" (click)="setOperacao('’')">’</button>
+                </div>
+
+                <div class="row" *ngIf="operacao != null;">
+                  <div class="col-5">
+                    <div class="form-group">
+                      <label for="conjunto1">Primeiro Conjunto</label>
+                      <select class="form-control" id="conjunto1" [(ngModel)]="conjunto1" >
+                        <option *ngFor="let conjunto of conjuntos" [value]="conjunto.nome">{{ conjunto.nome }} - {{ conjunto.getTamElementos() }}</option>
+                      </select>
+                    </div>
+                    <h5>{{ getConjunto(conjunto1).nome }} = {{ getConjunto(conjunto1).getElementos() }} - P({{ conjunto1 }}) = {{ getConjunto(conjunto1).getTamElementos() }}</h5>
+                  </div>
+                  <div class="col-2">
+                    <h4>{{ operacao }}</h4>
+                  </div>
+                  <div class="col-5">
+                    <div class="form-group">
+                      <label for="conjunto2">Segundo Conjunto</label>
+                      <select class="form-control" id="conjunto2" [(ngModel)]="conjunto2">
+                        <option *ngFor="let conjunto of conjuntos" [value]="conjunto.nome">{{ conjunto.nome }} - {{ conjunto.getTamElementos() }}</option>
+                      </select>
+                    </div>
+                    <h5>{{ getConjunto(conjunto2).nome }} = {{ getConjunto(conjunto2).getElementos() }} - P({{ conjunto2 }}) = {{ getConjunto(conjunto2).getTamElementos() }}</h5>
+                  </div>
+                </div>
+                <div class="row" *ngIf="operacao != null;">
+                  <div class="col-12">
+                    <h4>{{ getResultadoOperacao() }}</h4>
+                  </div>
                 </div>
               </div>
             </div>

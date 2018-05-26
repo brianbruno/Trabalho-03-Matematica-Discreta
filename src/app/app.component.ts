@@ -15,6 +15,9 @@ export class AppComponent {
   nomes: string[];
   operacao: string;
 
+  conjunto1: string;
+  conjunto2: string;
+
   constructor() {
     this.conjuntos = [];
     this.selecionado = null;
@@ -68,17 +71,38 @@ export class AppComponent {
   }
 
   addElemento (elemento: string) {
-    if  (elemento.charAt(0) === '#') {
-      const cj = elemento.substring(1);
-      elemento = this.getElemento(cj);
-    }
-    if (elemento != null) {
-      this.selecionado.addElemento(elemento);
+    if (elemento.length > 0) {
+      if (elemento.charAt(0) === '#') {
+        const cj = elemento.substring(1);
+        elemento = this.getElemento(cj);
+      }
+      if (elemento != null) {
+        this.selecionado.addElemento(elemento);
+      }
     }
   }
 
   setOperacao (op: string) {
     this.operacao = op;
+  }
+
+  getResultadoOperacao () {
+    let resultado = 'Z = ';
+
+    if (this.operacao === 'U') {
+      resultado = this.calculaUniao();
+    }
+    return resultado;
+  }
+
+  calculaUniao () {
+    let uniao = '';
+    const cj1 = this.getConjunto(this.conjunto1);
+    const cj2 = this.getConjunto(this.conjunto2);
+    if (cj1 != null && cj2 != null) {
+      uniao = cj1.uniao(cj2);
+    }
+    return uniao;
   }
 
 

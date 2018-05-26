@@ -58,4 +58,41 @@ export class ConjuntoComponent implements OnInit {
     return elementosString;
   }
 
+  getElementosSemChave () {
+    let elementosString = '';
+    const tam = this.elementos.length;
+    for (let i = 0; i < tam; i++) {
+      if (i + 1 === tam ) {
+        elementosString += ' ' + this.elementos[i];
+      } else {
+        elementosString += ' ' + this.elementos[i] + ',';
+      }
+    }
+    return elementosString;
+  }
+
+  uniao (cj: ConjuntoComponent) {
+
+    let novoVetor;
+
+    novoVetor = this.jutarArraysExcluindoValoresRepetidos(this.elementos.concat(cj.elementos));
+    novoVetor = novoVetor.sort();
+    const resultado: string = novoVetor.join(', ');
+    return 'Z = { ' + resultado + ' } - P(Z) = ' + novoVetor.length;
+  }
+
+  jutarArraysExcluindoValoresRepetidos(array) {
+    const a = array.concat();
+    for (let i = 0; i < a.length; ++i) {
+      for (let j = i + 1; j < a.length; ++j) {
+        if (a[i] === a[j]) {
+          a.splice(j--, 1);
+        }
+      }
+    }
+    return a;
+  }
+
+
+
 }
